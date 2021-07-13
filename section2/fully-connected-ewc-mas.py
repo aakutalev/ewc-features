@@ -12,7 +12,7 @@ import torch.nn.functional as F
 from torchvision import datasets
 from torch.utils.data import Dataset, DataLoader
 
-SCRIPT_NAME = "fully-connected-ewc-fisher"
+SCRIPT_NAME = "fully-connected-ewc-mas"
 logger = logging.getLogger(SCRIPT_NAME)
 
 
@@ -112,16 +112,11 @@ class Model(nn.Module):
 
         for i in range(s_num):
             _input = torch.tensor(inputs[i: i + 1], device=self.device)
-            label = labels[i]
-
-            log_probs = F.log_softmax(self.forward(_input), dim=1)
-
+            res = F.softmax(self.forward(_input), dim=1).square().sum()
             self.optimizer.zero_grad()
-            prob = log_probs[0, label]
-            prob.backward()
-
+            res.backward()
             for accum, v in zip(self.accumulators, self.network.parameters()):
-                accum.add_(v.grad.square())
+                accum.add_(v.grad.abs())
 
         for accum, imp in zip(self.accumulators, self.importances):
             imp.add_(accum / s_num)
@@ -201,7 +196,7 @@ def permute_mnist(mnist):
 def experiments_run():
     # setup logger to output to console and file
     logFormat = "%(asctime)s [%(levelname)s] %(message)s"
-    logFile = "./fully-connected-ewc-fisher.log"
+    logFile = "./fully-connected-ewc-mas.log"
     logging.basicConfig(filename=logFile, level=logging.INFO, format=logFormat)
 
     logFormatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
@@ -247,7 +242,7 @@ def experiments_run():
         mnist_datasets = [mnist0, mnist1, mnist2, mnist3, mnist4, mnist5, mnist6, mnist7, mnist8, mnist9]
         joblib.dump(mnist_datasets, dataset_file, compress=3)
 
-    exp_file = "fully-connected-ewc-fisher.dmp"
+    exp_file = "fully-connected-ewc-mas.dmp"
     try:
         experiments = joblib.load(exp_file)
     except FileNotFoundError:
@@ -267,7 +262,7 @@ def experiments_run():
     time_format = "%Y-%m-%d %H:%M:%S"
     logger.info(f'Continual learning start at {start_time:{time_format}}')
 
-    lmbdas = [1., 4., 7., 10., 12., 13., 13.5, 14., 14.5, 15., 16., 18., 21., 24., 27.]
+    lmbdas = [1/15, 4/15, 7/15, 10/15, 12/15, 13/15, 13.5/15, 14/15, 14.5/15, 15/15, 16/15, 18/15, 21/15, 24/15, 27/15]
     for lmbda in lmbdas:
         exps = experiments[lmbda]
         len_exp = len(exps)
