@@ -148,7 +148,7 @@ def train_model(model, train_set, test_sets, batch_size=100, epochs=1):
                 print(f'\rTraining {idx+1}/{num_iters} iterations done.', end='')
             idx += 1
 
-    print("\r")
+    print("\r", end='')
     model.eval()
     accuracy = 0.
     with torch.no_grad():
@@ -258,7 +258,7 @@ def experiments_run():
     # network structure and training parameters
     net_struct = [784, 300, 150, 10]
     learning_rate = 0.001
-    N = 2
+    N = 10
     batch_size = 100
     epoch_num = 6
 
@@ -268,9 +268,10 @@ def experiments_run():
     time_format = "%Y-%m-%d %H:%M:%S"
     logger.info(f'Continual learning start at {start_time:{time_format}}')
 
-    lmbdas = [1., 4., 7., 10., 12., 13., 13.5, 14., 14.5, 15., 16., 18., 21., 24., 25, 26, 27., 28, 29, 30, 32,
-              35, 38, 41, 45, 50, 55, 60, 65, 70, 80, 90, 100, 110, 120]
-#    lmbdas = [1., 4., 7., 10., 12., 13., 13.5, 14., 14.5, 15., 16., 18., 21., 24., 25, 25.5, 26, 26.5, 27, 27.5, 28, 28.5, 29, 30, 32, 35, 38, 41]
+    lmbdas = [4, 7, 10, 12, 14, 16, 18, 21, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+              40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 57, 60, 65, 70, 75, 80, 85, 90, 95,
+              100, 105, 110]
+
     for lmbda in lmbdas:
         exps = experiments[lmbda]
         len_exp = len(exps)
