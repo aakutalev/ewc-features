@@ -258,7 +258,7 @@ def experiments_run():
     # network structure and training parameters
     net_struct = [784, 300, 150, 10]
     learning_rate = 0.001
-    N = 10
+    N = 15
     batch_size = 100
     epoch_num = 6
 

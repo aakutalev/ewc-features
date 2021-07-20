@@ -1,3 +1,5 @@
 .idea
 mnist_data
-datasets.dmp
+fmnist_data
+datasets*.dmp
+.ipynb_checkpoints
