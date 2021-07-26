@@ -13,7 +13,7 @@ from torchvision import datasets
 from torch.utils.data import Dataset, DataLoader
 from scipy import ndimage
 
-SCRIPT_NAME = "convolutional-ewc-fisher"
+SCRIPT_NAME = "convolutional-ewc-mas"
 logger = logging.getLogger(SCRIPT_NAME)
 
 
@@ -125,16 +125,11 @@ class Model(nn.Module):
 
         for i in range(s_num):
             _input = torch.tensor(inputs[i: i + 1], device=self.device)
-            label = labels[i]
-
-            log_probs = F.log_softmax(self.forward(_input), dim=1)
-
+            res = F.softmax(self.forward(_input), dim=1).square().sum()
             self.optimizer.zero_grad()
-            prob = log_probs[0, label]
-            prob.backward()
-
+            res.backward()
             for accum, v in zip(self.accumulators, self.network.parameters()):
-                accum.add_(v.grad.square())
+                accum.add_(v.grad.abs())
 
         for accum, imp in zip(self.accumulators, self.importances):
             imp.add_(accum / s_num)
@@ -234,7 +229,7 @@ def rotate_mnist(mnist, degrees=0):
 def experiments_run():
     # setup logger to output to console and file
     logFormat = "%(asctime)s [%(levelname)s] %(message)s"
-    logFile = "./convolutional-ewc-fisher.log"
+    logFile = "./convolutional-ewc-mas.log"
     logging.basicConfig(filename=logFile, level=logging.INFO, format=logFormat)
 
     logFormatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
@@ -243,7 +238,7 @@ def experiments_run():
     consoleHandler.setFormatter(logFormatter)
     logger.addHandler(consoleHandler)
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
     logger.info(f"Operating device is {device}")
 
     dataset_file = 'datasets-conv.dmp'
@@ -286,7 +281,7 @@ def experiments_run():
 #        mnist_datasets = [mnist0, mnist1, mnist2, mnist3, mnist4, mnist5, mnist6, mnist7, mnist8, mnist9]
         joblib.dump(mnist_datasets, dataset_file, compress=3)
 
-    exp_file = "convolutional-ewc-fisher.dmp"
+    exp_file = "convolutional-ewc-mas.dmp"
     try:
         experiments = joblib.load(exp_file)
     except FileNotFoundError:
@@ -295,7 +290,7 @@ def experiments_run():
 
     # network structure and training parameters
     learning_rate = 0.001
-    N = 20
+    N = 10
     batch_size = 100
     epoch_num = 6
 
@@ -305,8 +300,8 @@ def experiments_run():
     time_format = "%Y-%m-%d %H:%M:%S"
     logger.info(f'Continual learning start at {start_time:{time_format}}')
 
-    lmbdas = [0, 200, 400, 500, 550, 600, 650, 675, 700, 725, 750, 800, 900, 1000, 1100, 1200, 1400, 1600, 1900,
-              2100, 2400, 2700, 3000]
+    lmbdas = [0, 20, 40, 50, 55, 60, 65, 67.5, 70, 72.5, 75, 80, 90, 100, 110, 120, 140, 160, 190,
+              210, 240, 270, 300, 350, 400, 450, 500, 550, 600, 650, 700, 800, 900, 1000]
 
     for lmbda in lmbdas:
         exps = experiments[lmbda]

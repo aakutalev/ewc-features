@@ -13,8 +13,10 @@ from torchvision import datasets
 from torch.utils.data import Dataset, DataLoader
 from scipy import ndimage
 
-SCRIPT_NAME = "convolutional-ewc-fisher"
+SCRIPT_NAME = "convolutional-ewc-si"
 logger = logging.getLogger(SCRIPT_NAME)
+
+_epsilon = 0.1
 
 
 class MyMNIST(Dataset):
@@ -87,9 +89,16 @@ class Model(nn.Module):
             for p, reg, p_star in zip(list(self.network.parameters()), self.regularizers, self.star_params):
                 loss += torch.sum(reg * torch.square(p - p_star))
 
+        # store params before step for importance calculation
+        params = [p for p in self.network.parameters()]
+        prev_params = [p.clone().detach() for p in params]
+
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
+
+        for accum, p, prev_p in zip(self.accumulators, params, prev_params):
+            accum -= p.grad * (p.data - prev_p.data)  # ToDo: check this in debug
 
     def reset(self):
         # reinitialize network
@@ -106,6 +115,9 @@ class Model(nn.Module):
         """
         self.lmbda = lmbda
         self.regularizers = [imp * lmbda for imp in self.importances]
+        for accum in self.accumulators:
+            accum.fill_(0.)
+        self.star_params = [v.clone().detach() for v in self.network.parameters()]
 
     def close_lesson(self, inputs=None, labels=None):
         """
@@ -113,33 +125,8 @@ class Model(nn.Module):
         :param closing_set: датасет, на котором будут рассчитаны важности весов после обучения
         :return:
         """
-        if inputs is None:
-            return
-
-        self.eval()
-
-        s_num = len(inputs)
-
-        for accum in self.accumulators:
-            accum.fill_(0.)
-
-        for i in range(s_num):
-            _input = torch.tensor(inputs[i: i + 1], device=self.device)
-            label = labels[i]
-
-            log_probs = F.log_softmax(self.forward(_input), dim=1)
-
-            self.optimizer.zero_grad()
-            prob = log_probs[0, label]
-            prob.backward()
-
-            for accum, v in zip(self.accumulators, self.network.parameters()):
-                accum.add_(v.grad.square())
-
-        for accum, imp in zip(self.accumulators, self.importances):
-            imp.add_(accum / s_num)
-
-        self.star_params = [v.clone().detach() for v in self.network.parameters()]
+        for imp, accum, p, prev_p in zip(self.importances, self.accumulators, self.network.parameters(), self.star_params):
+            imp += accum / (torch.square(p.data - prev_p) + _epsilon)
 
 
 def train_model(model, train_set, test_sets, batch_size=100, epochs=1):
@@ -234,7 +221,7 @@ def rotate_mnist(mnist, degrees=0):
 def experiments_run():
     # setup logger to output to console and file
     logFormat = "%(asctime)s [%(levelname)s] %(message)s"
-    logFile = "./convolutional-ewc-fisher.log"
+    logFile = "./convolutional-ewc-si.log"
     logging.basicConfig(filename=logFile, level=logging.INFO, format=logFormat)
 
     logFormatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
@@ -243,7 +230,7 @@ def experiments_run():
     consoleHandler.setFormatter(logFormatter)
     logger.addHandler(consoleHandler)
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu")
     logger.info(f"Operating device is {device}")
 
     dataset_file = 'datasets-conv.dmp'
@@ -286,7 +273,7 @@ def experiments_run():
 #        mnist_datasets = [mnist0, mnist1, mnist2, mnist3, mnist4, mnist5, mnist6, mnist7, mnist8, mnist9]
         joblib.dump(mnist_datasets, dataset_file, compress=3)
 
-    exp_file = "convolutional-ewc-fisher.dmp"
+    exp_file = "convolutional-ewc-si.dmp"
     try:
         experiments = joblib.load(exp_file)
     except FileNotFoundError:
@@ -295,7 +282,7 @@ def experiments_run():
 
     # network structure and training parameters
     learning_rate = 0.001
-    N = 20
+    N = 10
     batch_size = 100
     epoch_num = 6
 
@@ -305,8 +292,8 @@ def experiments_run():
     time_format = "%Y-%m-%d %H:%M:%S"
     logger.info(f'Continual learning start at {start_time:{time_format}}')
 
-    lmbdas = [0, 200, 400, 500, 550, 600, 650, 675, 700, 725, 750, 800, 900, 1000, 1100, 1200, 1400, 1600, 1900,
-              2100, 2400, 2700, 3000]
+    lmbdas = [0, 2, 4, 5, 5.5, 6, 6.5, 6.75, 7, 7.25, 7.5, 8, 9, 10, 11, 12, 14, 16, 19,
+              21, 24, 27, 30, 35, 40, 50, 70, 90, 110, 140, 170, 200, 230, 260, 290, 320]
 
     for lmbda in lmbdas:
         exps = experiments[lmbda]
