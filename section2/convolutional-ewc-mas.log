@@ -13418,25 +13418,3 @@
 2021-07-26 09:07:16,798 [INFO] 10-th experiment time spent 0:01:50.094323
 2021-07-26 09:07:16,798 [INFO] For now total time spent 17:37:24.058471
 2021-07-26 09:07:16,798 [INFO] Done for lambdas [0, 20, 40, 50, 55, 60, 65, 67.5, 70, 72.5, 75, 80, 90, 100, 110, 120, 140, 160, 190, 210, 240, 270, 300, 350, 400, 450, 500, 550, 600, 650, 700, 800, 900, 1000, 1125, 1250, 1375, 1500, 1625, 1750, 1875, 2000, 2250, 2500, 2750, 3000, 3250, 3500]
-2021-07-28 21:57:34,897 [INFO] Operating device is cuda:1
-2021-07-28 21:57:38,225 [INFO] Dataset has been loaded from cache.
-2021-07-28 21:57:57,204 [INFO] Operating device is cuda:0
-2021-07-28 21:58:00,610 [INFO] Dataset has been loaded from cache.
-2021-07-28 21:58:02,016 [INFO] Continual learning start at 2021-07-28 21:58:02
-2021-07-28 22:32:01,204 [INFO] Operating device is cuda:0
-2021-07-28 22:32:04,590 [INFO] Dataset has been loaded from cache.
-2021-07-28 22:32:05,998 [INFO] Continual learning start at 2021-07-28 22:32:05
-2021-07-28 22:35:15,888 [INFO] Operating device is cuda:0
-2021-07-28 22:35:19,269 [INFO] Dataset has been loaded from cache.
-2021-07-28 22:35:20,675 [INFO] Continual learning start at 2021-07-28 22:35:20
-2021-07-29 20:46:01,690 [INFO] Operating device is cuda:0
-2021-07-29 20:46:05,081 [INFO] Dataset has been loaded from cache.
-2021-07-29 20:46:06,487 [INFO] Continual learning start at 2021-07-29 20:46:06
-2021-08-19 14:44:14,264 [INFO] Operating device is cuda
-2021-08-19 14:44:17,645 [INFO] Dataset has been loaded from cache.
-2021-08-19 14:44:57,346 [INFO] Operating device is cuda
-2021-08-19 14:45:00,794 [INFO] Dataset has been loaded from cache.
-2021-08-19 15:21:26,634 [INFO] Operating device is cuda
-2021-08-19 15:21:30,115 [INFO] Dataset has been loaded from cache.
-2021-08-19 15:22:35,923 [INFO] Operating device is cuda
-2021-08-19 15:22:39,271 [INFO] Dataset has been loaded from cache.
