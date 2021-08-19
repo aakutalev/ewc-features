@@ -230,7 +230,7 @@ def experiments_run():
     consoleHandler.setFormatter(logFormatter)
     logger.addHandler(consoleHandler)
 
-    device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"Operating device is {device}")
 
     dataset_file = 'datasets-conv.dmp'
@@ -270,7 +270,6 @@ def experiments_run():
         mnist3 = rotate_mnist(fmnist, 90)
 
         mnist_datasets = [mnist0, mnist1, mnist2, mnist3]
-#        mnist_datasets = [mnist0, mnist1, mnist2, mnist3, mnist4, mnist5, mnist6, mnist7, mnist8, mnist9]
         joblib.dump(mnist_datasets, dataset_file, compress=3)
 
     exp_file = "convolutional-ewc-si-stabilized.dmp"
@@ -282,7 +281,7 @@ def experiments_run():
 
     # network structure and training parameters
     learning_rate = 0.001
-    N = 3  # 10
+    N = 20
     batch_size = 100
     epoch_num = 6
 
@@ -293,7 +292,8 @@ def experiments_run():
     logger.info(f'Continual learning start at {start_time:{time_format}}')
 
     lmbdas = [0, 2, 4, 5, 5.5, 6, 6.5, 6.75, 7, 7.25, 7.5, 8, 9, 10, 11, 12, 14, 16, 19,
-              21, 24, 27, 30, 35, 40, 50, 70, 90, 110, 140, 170, 200, 230, 260, 290, 320]
+              21, 24, 27, 30, 35, 40, 50, 70, 90, 110, 140, 170, 200, 230, 260, 290, 320, 350, 400,
+              450,500,550,600,650,700,750,800, 1000, 1200, 1400, 1600, 1800, 2000]
 
     for lmbda in lmbdas:
         exps = experiments[lmbda]

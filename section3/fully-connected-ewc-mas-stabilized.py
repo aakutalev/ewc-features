@@ -253,7 +253,7 @@ def experiments_run():
     # network structure and training parameters
     net_struct = [784, 300, 150, 10]
     learning_rate = 0.001
-    N = 3  # 20
+    N = 20
     batch_size = 100
     epoch_num = 6
 
@@ -263,7 +263,9 @@ def experiments_run():
     time_format = "%Y-%m-%d %H:%M:%S"
     logger.info(f'Continual learning start at {start_time:{time_format}}')
 
-    lmbdas = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 19, 22, 25, 27, 29, 32, 35, 38, 41, 45, 49, 53, 58, 63]
+    lmbdas = [0, 2, 4, 5, 6, 7, 7.5, 8, 8.5, 8.75, 9, 9.25, 9.5, 10,
+              10.5, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24, 26, 30, 
+              34, 38, 42]
 
     for lmbda in lmbdas:
         exps = experiments[lmbda]

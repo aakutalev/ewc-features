@@ -283,7 +283,6 @@ def experiments_run():
         mnist3 = rotate_mnist(fmnist, 90)
 
         mnist_datasets = [mnist0, mnist1, mnist2, mnist3]
-#        mnist_datasets = [mnist0, mnist1, mnist2, mnist3, mnist4, mnist5, mnist6, mnist7, mnist8, mnist9]
         joblib.dump(mnist_datasets, dataset_file, compress=3)
 
     exp_file = "convolutional-ewc-fisher-stabilized.dmp"
@@ -295,7 +294,7 @@ def experiments_run():
 
     # network structure and training parameters
     learning_rate = 0.001
-    N = 3  # 20
+    N = 20
     batch_size = 100
     epoch_num = 6
 
@@ -305,8 +304,9 @@ def experiments_run():
     time_format = "%Y-%m-%d %H:%M:%S"
     logger.info(f'Continual learning start at {start_time:{time_format}}')
 
-    lmbdas = [0, 200, 400, 500, 550, 600, 650, 675, 700, 725, 750, 800, 900, 1000, 1100, 1200, 1400, 1600, 1900,
-              2100, 2400, 2700, 3000, 3300, 3600, 3900, 4200, 4500, 4800, 5100]
+    lmbdas = [0, 200, 400, 500, 550, 600, 650, 675, 700, 725, 750, 800, 900, 1000, 1100, 1200, 1300, 1400, 
+              1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500, 2700, 3000, 3300, 3600, 
+              3900, 4200, 4500, 4800, 5100, 5400, 5700, 6000, 6500,7000,7500, 8000,8500]
 
     for lmbda in lmbdas:
         exps = experiments[lmbda]
