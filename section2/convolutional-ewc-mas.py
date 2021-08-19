@@ -238,7 +238,7 @@ def experiments_run():
     consoleHandler.setFormatter(logFormatter)
     logger.addHandler(consoleHandler)
 
-    device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"Operating device is {device}")
 
     dataset_file = 'datasets-conv.dmp'
@@ -290,7 +290,7 @@ def experiments_run():
 
     # network structure and training parameters
     learning_rate = 0.001
-    N = 10
+    N = 20
     batch_size = 100
     epoch_num = 6
 
@@ -301,7 +301,8 @@ def experiments_run():
     logger.info(f'Continual learning start at {start_time:{time_format}}')
 
     lmbdas = [0, 20, 40, 50, 55, 60, 65, 67.5, 70, 72.5, 75, 80, 90, 100, 110, 120, 140, 160, 190,
-              210, 240, 270, 300, 350, 400, 450, 500, 550, 600, 650, 700, 800, 900, 1000]
+              210, 240, 270, 300, 350, 400, 450, 500, 550, 600, 650, 700, 800, 900, 1000, 1125, 1250, 1375,
+              1500, 1625, 1750, 1875, 2000, 2250, 2500, 2750, 3000, 3250, 3500]
 
     for lmbda in lmbdas:
         exps = experiments[lmbda]

@@ -9884,3 +9884,345 @@
 2021-07-26 00:33:18,563 [INFO] 10-th experiment time spent 0:01:51.147175
 2021-07-26 00:33:18,563 [INFO] For now total time spent 9:04:46.684137
 2021-07-26 00:33:18,563 [INFO] Done for lambdas [0, 200, 400, 500, 550, 600, 650, 675, 700, 725, 750, 800, 900, 1000, 1100, 1200, 1400, 1600, 1900, 2100, 2400, 2700, 2850, 3000, 3250, 3500, 4000, 4500]
+2021-07-28 22:48:54,463 [INFO] Operating device is cuda:4
+2021-07-28 22:48:58,688 [INFO] Dataset has been loaded from cache.
+2021-07-28 22:49:02,397 [INFO] Continual learning start at 2021-07-28 22:49:02
+2021-07-28 22:49:02,397 [INFO] Start calc on lambda 0. 0 experiments are queued.
+2021-07-28 22:49:02,397 [INFO] Start calc on lambda 100. 19 experiments are queued.
+2021-07-28 22:49:02,397 [INFO] 2-th experiment on lambda 100 started at 2021-07-28 22:49:02
+2021-07-28 22:49:02,398 [INFO] Model has been cleaned.
+2021-07-28 22:49:24,297 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9925
+2021-07-28 22:49:39,444 [INFO] Max importance 0.15048281848430634, max mean importance 0.02014685608446598.
+2021-07-28 22:50:08,809 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.59935
+2021-07-28 22:50:24,124 [INFO] Max importance 5.769423007965088, max mean importance 0.4246119260787964.
+2021-07-28 22:50:53,870 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.5626333333333333
+2021-07-28 22:51:08,955 [INFO] Max importance 6.156355381011963, max mean importance 0.5017749071121216.
+2021-07-28 22:51:38,538 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.494275
+2021-07-28 22:51:38,590 [INFO] 1-th experiment time spent 0:02:36.192457
+2021-07-28 22:51:38,590 [INFO] For now total time spent 0:02:36.193160
+2021-07-28 22:51:38,590 [INFO] 3-th experiment on lambda 100 started at 2021-07-28 22:51:38
+2021-07-28 22:51:38,591 [INFO] Model has been cleaned.
+2021-07-28 22:52:07,951 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.989
+2021-07-28 22:52:22,590 [INFO] Max importance 0.37718504667282104, max mean importance 0.0737985149025917.
+2021-07-28 22:52:51,120 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.64955
+2021-07-28 22:53:06,153 [INFO] Max importance 14.313045501708984, max mean importance 1.0005112886428833.
+2021-07-28 22:53:34,738 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6819666666666667
+2021-07-28 22:53:49,797 [INFO] Max importance 16.153583526611328, max mean importance 1.2664446830749512.
+2021-07-28 22:54:19,476 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.535575
+2021-07-28 22:54:19,530 [INFO] 2-th experiment time spent 0:02:40.939474
+2021-07-28 22:54:19,530 [INFO] For now total time spent 0:05:17.132820
+2021-07-28 22:54:19,530 [INFO] 4-th experiment on lambda 100 started at 2021-07-28 22:54:19
+2021-07-28 22:54:19,531 [INFO] Model has been cleaned.
+2021-07-28 22:54:49,103 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9811
+2021-07-28 22:55:04,383 [INFO] Max importance 5.458675861358643, max mean importance 0.6063685417175293.
+2021-07-28 22:55:33,978 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.6647000000000001
+2021-07-28 22:55:49,322 [INFO] Max importance 19.199588775634766, max mean importance 1.868179202079773.
+2021-07-28 22:56:18,110 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6514
+2021-07-28 22:56:33,150 [INFO] Max importance 21.42263412475586, max mean importance 2.1758415699005127.
+2021-07-28 22:57:02,287 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.537175
+2021-07-28 22:57:02,339 [INFO] 3-th experiment time spent 0:02:42.809257
+2021-07-28 22:57:02,339 [INFO] For now total time spent 0:07:59.942268
+2021-07-28 22:57:02,339 [INFO] 5-th experiment on lambda 100 started at 2021-07-28 22:57:02
+2021-07-28 22:57:02,340 [INFO] Model has been cleaned.
+2021-07-28 22:57:31,320 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9901
+2021-07-28 22:57:46,207 [INFO] Max importance 0.9149448275566101, max mean importance 0.15115240216255188.
+2021-07-28 22:58:15,160 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.61675
+2021-07-28 22:58:30,194 [INFO] Max importance 5.95618200302124, max mean importance 0.6335883736610413.
+2021-07-28 22:58:59,224 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6299333333333333
+2021-07-28 22:59:14,300 [INFO] Max importance 6.528472900390625, max mean importance 0.8904157876968384.
+2021-07-28 22:59:43,667 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.5347500000000001
+2021-07-28 22:59:43,717 [INFO] 4-th experiment time spent 0:02:41.377841
+2021-07-28 22:59:43,717 [INFO] For now total time spent 0:10:41.320293
+2021-07-28 22:59:43,717 [INFO] 6-th experiment on lambda 100 started at 2021-07-28 22:59:43
+2021-07-28 22:59:43,718 [INFO] Model has been cleaned.
+2021-07-28 23:00:12,860 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9902
+2021-07-28 23:00:28,496 [INFO] Max importance 1.331932544708252, max mean importance 0.16726325452327728.
+2021-07-28 23:00:57,458 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.59475
+2021-07-28 23:01:12,923 [INFO] Max importance 6.9550886154174805, max mean importance 0.7487030029296875.
+2021-07-28 23:01:42,737 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6101333333333333
+2021-07-28 23:01:58,094 [INFO] Max importance 8.3742036819458, max mean importance 0.9721397161483765.
+2021-07-28 23:02:27,073 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.5133749999999999
+2021-07-28 23:02:27,127 [INFO] 5-th experiment time spent 0:02:43.409610
+2021-07-28 23:02:27,127 [INFO] For now total time spent 0:13:24.730088
+2021-07-28 23:02:27,127 [INFO] 7-th experiment on lambda 100 started at 2021-07-28 23:02:27
+2021-07-28 23:02:27,128 [INFO] Model has been cleaned.
+2021-07-28 23:02:56,543 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9886
+2021-07-28 23:03:11,709 [INFO] Max importance 3.392990827560425, max mean importance 0.3528733253479004.
+2021-07-28 23:03:41,255 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.68755
+2021-07-28 23:03:56,163 [INFO] Max importance 7.697000503540039, max mean importance 1.0742464065551758.
+2021-07-28 23:04:25,315 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6925
+2021-07-28 23:04:40,505 [INFO] Max importance 9.412009239196777, max mean importance 1.2872114181518555.
+2021-07-28 23:05:09,903 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.5518000000000001
+2021-07-28 23:05:09,999 [INFO] 6-th experiment time spent 0:02:42.872524
+2021-07-28 23:05:10,000 [INFO] For now total time spent 0:16:07.602810
+2021-07-28 23:05:10,000 [INFO] 8-th experiment on lambda 100 started at 2021-07-28 23:05:10
+2021-07-28 23:05:10,002 [INFO] Model has been cleaned.
+2021-07-28 23:05:39,231 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9893
+2021-07-28 23:05:54,469 [INFO] Max importance 1.1139874458312988, max mean importance 0.1600523293018341.
+2021-07-28 23:06:23,507 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.58775
+2021-07-28 23:06:38,976 [INFO] Max importance 4.793548583984375, max mean importance 0.8665370941162109.
+2021-07-28 23:07:08,427 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6026333333333334
+2021-07-28 23:07:23,365 [INFO] Max importance 5.342811584472656, max mean importance 1.0575225353240967.
+2021-07-28 23:07:52,237 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.48679999999999995
+2021-07-28 23:07:52,292 [INFO] 7-th experiment time spent 0:02:42.292075
+2021-07-28 23:07:52,292 [INFO] For now total time spent 0:18:49.895083
+2021-07-28 23:07:52,292 [INFO] 9-th experiment on lambda 100 started at 2021-07-28 23:07:52
+2021-07-28 23:07:52,293 [INFO] Model has been cleaned.
+2021-07-28 23:08:21,514 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9881
+2021-07-28 23:08:35,696 [INFO] Max importance 0.6515175700187683, max mean importance 0.1391255259513855.
+2021-07-28 23:09:04,891 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.61405
+2021-07-28 23:09:19,900 [INFO] Max importance 4.386632919311523, max mean importance 0.6013456583023071.
+2021-07-28 23:09:49,073 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.5924666666666667
+2021-07-28 23:10:04,930 [INFO] Max importance 4.9532952308654785, max mean importance 0.7910811901092529.
+2021-07-28 23:10:34,049 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.508625
+2021-07-28 23:10:34,100 [INFO] 8-th experiment time spent 0:02:41.807686
+2021-07-28 23:10:34,100 [INFO] For now total time spent 0:21:31.702954
+2021-07-28 23:10:34,100 [INFO] 10-th experiment on lambda 100 started at 2021-07-28 23:10:34
+2021-07-28 23:10:34,100 [INFO] Model has been cleaned.
+2021-07-28 23:11:03,085 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9906
+2021-07-28 23:11:17,920 [INFO] Max importance 0.6922029256820679, max mean importance 0.12359245121479034.
+2021-07-28 23:11:47,376 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.6253500000000001
+2021-07-28 23:12:02,333 [INFO] Max importance 3.9333996772766113, max mean importance 0.7468944787979126.
+2021-07-28 23:12:31,969 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6351
+2021-07-28 23:12:46,364 [INFO] Max importance 5.052638530731201, max mean importance 0.9976674318313599.
+2021-07-28 23:19:07,808 [INFO] Operating device is cuda:4
+2021-07-28 23:19:11,579 [INFO] Dataset has been loaded from cache.
+2021-07-28 23:19:14,502 [INFO] Continual learning start at 2021-07-28 23:19:14
+2021-07-28 23:19:14,503 [INFO] Start calc on lambda 0. 0 experiments are queued.
+2021-07-28 23:19:14,503 [INFO] Start calc on lambda 100. 19 experiments are queued.
+2021-07-28 23:19:14,503 [INFO] 2-th experiment on lambda 100 started at 2021-07-28 23:19:14
+2021-07-28 23:19:14,503 [INFO] Model has been cleaned.
+2021-07-28 23:19:29,802 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9903
+2021-07-28 23:19:39,937 [INFO] Max importance 0.24159950017929077, max mean importance 0.03524134308099747.
+2021-07-28 23:19:59,736 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.584
+2021-07-28 23:20:10,392 [INFO] Max importance 6.5780768394470215, max mean importance 0.48998957872390747.
+2021-07-28 23:20:30,259 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.5911
+2021-07-28 23:20:40,636 [INFO] Max importance 6.672495365142822, max mean importance 0.6156245470046997.
+2021-07-28 23:21:00,745 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.53745
+2021-07-28 23:21:00,777 [INFO] 1-th experiment time spent 0:01:46.274590
+2021-07-28 23:21:00,777 [INFO] For now total time spent 0:01:46.275167
+2021-07-28 23:21:00,777 [INFO] 3-th experiment on lambda 100 started at 2021-07-28 23:21:00
+2021-07-28 23:21:00,778 [INFO] Model has been cleaned.
+2021-07-28 23:21:20,640 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.985
+2021-07-28 23:21:31,157 [INFO] Max importance 1.455906629562378, max mean importance 0.18513667583465576.
+2021-07-28 23:21:50,965 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.68135
+2021-07-28 23:22:01,447 [INFO] Max importance 4.694265365600586, max mean importance 0.7673209309577942.
+2021-07-28 23:22:21,283 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6356666666666667
+2021-07-28 23:22:31,543 [INFO] Max importance 5.317812919616699, max mean importance 0.9427808523178101.
+2021-07-28 23:22:51,955 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.4659
+2021-07-28 23:22:51,987 [INFO] 2-th experiment time spent 0:01:51.209285
+2021-07-28 23:22:51,987 [INFO] For now total time spent 0:03:37.484618
+2021-07-28 23:22:51,987 [INFO] 4-th experiment on lambda 100 started at 2021-07-28 23:22:51
+2021-07-28 23:22:51,987 [INFO] Model has been cleaned.
+2021-07-28 23:23:11,643 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9863
+2021-07-28 23:23:22,086 [INFO] Max importance 1.8212591409683228, max mean importance 0.3161422312259674.
+2021-07-28 23:23:41,796 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.71445
+2021-07-28 23:23:51,983 [INFO] Max importance 9.740214347839355, max mean importance 1.179774284362793.
+2021-07-28 23:24:11,786 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.7155999999999999
+2021-07-28 23:24:22,032 [INFO] Max importance 11.130029678344727, max mean importance 1.4966425895690918.
+2021-07-28 23:24:41,776 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.5619000000000001
+2021-07-28 23:24:41,808 [INFO] 3-th experiment time spent 0:01:49.820668
+2021-07-28 23:24:41,808 [INFO] For now total time spent 0:05:27.305461
+2021-07-28 23:24:41,808 [INFO] 5-th experiment on lambda 100 started at 2021-07-28 23:24:41
+2021-07-28 23:24:41,808 [INFO] Model has been cleaned.
+2021-07-28 23:25:01,250 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9854
+2021-07-28 23:25:12,117 [INFO] Max importance 2.392817974090576, max mean importance 0.2811000347137451.
+2021-07-28 23:25:32,251 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.6784
+2021-07-28 23:25:42,798 [INFO] Max importance 12.842031478881836, max mean importance 1.3055522441864014.
+2021-07-28 23:26:02,524 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.7313000000000001
+2021-07-28 23:26:13,586 [INFO] Max importance 14.642160415649414, max mean importance 1.6188712120056152.
+2021-07-28 23:26:33,710 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.5309
+2021-07-28 23:26:33,740 [INFO] 4-th experiment time spent 0:01:51.932775
+2021-07-28 23:26:33,741 [INFO] For now total time spent 0:07:19.238388
+2021-07-28 23:26:33,741 [INFO] 6-th experiment on lambda 100 started at 2021-07-28 23:26:33
+2021-07-28 23:26:33,741 [INFO] Model has been cleaned.
+2021-07-28 23:26:53,900 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.989
+2021-07-28 23:27:04,422 [INFO] Max importance 1.9294798374176025, max mean importance 0.2440144270658493.
+2021-07-28 23:27:24,226 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.6994499999999999
+2021-07-28 23:27:34,630 [INFO] Max importance 7.720205307006836, max mean importance 1.0256781578063965.
+2021-07-28 23:27:54,692 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6309666666666667
+2021-07-28 23:28:05,127 [INFO] Max importance 14.454109191894531, max mean importance 1.389451503753662.
+2021-07-28 23:28:24,945 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.532925
+2021-07-28 23:28:24,995 [INFO] 5-th experiment time spent 0:01:51.253962
+2021-07-28 23:28:24,995 [INFO] For now total time spent 0:09:10.492524
+2021-07-28 23:28:24,995 [INFO] 7-th experiment on lambda 100 started at 2021-07-28 23:28:24
+2021-07-28 23:28:24,995 [INFO] Model has been cleaned.
+2021-07-28 23:28:44,805 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9864
+2021-07-28 23:28:54,999 [INFO] Max importance 0.9119359254837036, max mean importance 0.14338277280330658.
+2021-07-28 23:29:15,363 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.6689
+2021-07-28 23:29:25,551 [INFO] Max importance 4.097044467926025, max mean importance 0.618442714214325.
+2021-07-28 23:29:45,633 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6455000000000001
+2021-07-28 23:29:55,921 [INFO] Max importance 6.786468505859375, max mean importance 0.9222214818000793.
+2021-07-28 23:30:15,815 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.505525
+2021-07-28 23:30:15,856 [INFO] 6-th experiment time spent 0:01:50.861288
+2021-07-28 23:30:15,856 [INFO] For now total time spent 0:11:01.353996
+2021-07-28 23:30:15,856 [INFO] 8-th experiment on lambda 100 started at 2021-07-28 23:30:15
+2021-07-28 23:30:15,857 [INFO] Model has been cleaned.
+2021-07-28 23:30:35,296 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9883
+2021-07-28 23:30:45,835 [INFO] Max importance 1.385793924331665, max mean importance 0.17193731665611267.
+2021-07-28 23:31:06,247 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.67595
+2021-07-28 23:31:16,862 [INFO] Max importance 10.192743301391602, max mean importance 1.019358515739441.
+2021-07-28 23:31:36,389 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6472
+2021-07-28 23:31:46,765 [INFO] Max importance 12.771139144897461, max mean importance 1.5933746099472046.
+2021-07-28 23:32:07,676 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.52145
+2021-07-28 23:32:07,739 [INFO] 7-th experiment time spent 0:01:51.883256
+2021-07-28 23:32:07,740 [INFO] For now total time spent 0:12:53.237419
+2021-07-28 23:32:07,740 [INFO] 9-th experiment on lambda 100 started at 2021-07-28 23:32:07
+2021-07-28 23:32:07,740 [INFO] Model has been cleaned.
+2021-07-28 23:32:27,540 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9896
+2021-07-28 23:32:37,905 [INFO] Max importance 1.170404314994812, max mean importance 0.1392209529876709.
+2021-07-28 23:32:58,165 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.6621
+2021-07-28 23:33:08,665 [INFO] Max importance 10.913866996765137, max mean importance 1.0204163789749146.
+2021-07-28 23:33:28,264 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6555
+2021-07-28 23:33:38,681 [INFO] Max importance 11.724356651306152, max mean importance 1.236602544784546.
+2021-07-28 23:33:58,977 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.5197499999999999
+2021-07-28 23:33:59,009 [INFO] 8-th experiment time spent 0:01:51.269800
+2021-07-28 23:33:59,010 [INFO] For now total time spent 0:14:44.507388
+2021-07-28 23:33:59,010 [INFO] 10-th experiment on lambda 100 started at 2021-07-28 23:33:59
+2021-07-28 23:33:59,010 [INFO] Model has been cleaned.
+2021-07-28 23:34:18,486 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.987
+2021-07-28 23:34:28,891 [INFO] Max importance 1.8307898044586182, max mean importance 0.25446581840515137.
+2021-07-28 23:34:48,552 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.6912
+2021-07-28 23:34:59,094 [INFO] Max importance 5.172797203063965, max mean importance 1.0478726625442505.
+2021-07-28 23:35:18,966 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6174666666666666
+2021-07-28 23:35:29,320 [INFO] Max importance 6.213405609130859, max mean importance 1.3575804233551025.
+2021-07-28 23:35:49,248 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.48267499999999997
+2021-07-28 23:35:49,281 [INFO] 9-th experiment time spent 0:01:50.270996
+2021-07-28 23:35:49,281 [INFO] For now total time spent 0:16:34.778546
+2021-07-28 23:35:49,281 [INFO] 11-th experiment on lambda 100 started at 2021-07-28 23:35:49
+2021-07-28 23:35:49,281 [INFO] Model has been cleaned.
+2021-07-28 23:36:09,198 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9883
+2021-07-28 23:36:19,729 [INFO] Max importance 0.5677267909049988, max mean importance 0.08971795439720154.
+2021-07-28 23:36:39,886 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.6451
+2021-07-28 23:36:50,519 [INFO] Max importance 6.082626819610596, max mean importance 0.8745421171188354.
+2021-07-28 23:37:10,570 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.66
+2021-07-28 23:37:20,869 [INFO] Max importance 7.619134902954102, max mean importance 1.1028050184249878.
+2021-07-28 23:37:40,872 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.490225
+2021-07-28 23:37:40,915 [INFO] 10-th experiment time spent 0:01:51.633928
+2021-07-28 23:37:40,915 [INFO] For now total time spent 0:18:26.412706
+2021-07-28 23:37:40,915 [INFO] 12-th experiment on lambda 100 started at 2021-07-28 23:37:40
+2021-07-28 23:37:40,916 [INFO] Model has been cleaned.
+2021-07-28 23:38:01,285 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9864
+2021-07-28 23:38:12,051 [INFO] Max importance 1.6453781127929688, max mean importance 0.15313448011875153.
+2021-07-28 23:38:32,065 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.58975
+2021-07-28 23:38:42,503 [INFO] Max importance 7.3218889236450195, max mean importance 0.6670831441879272.
+2021-07-28 23:39:03,029 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6186333333333333
+2021-07-28 23:39:13,263 [INFO] Max importance 12.994611740112305, max mean importance 1.0564076900482178.
+2021-07-28 23:39:33,207 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.4746
+2021-07-28 23:39:33,239 [INFO] 11-th experiment time spent 0:01:52.324217
+2021-07-28 23:39:33,239 [INFO] For now total time spent 0:20:18.737127
+2021-07-28 23:39:33,239 [INFO] 13-th experiment on lambda 100 started at 2021-07-28 23:39:33
+2021-07-28 23:39:33,240 [INFO] Model has been cleaned.
+2021-07-28 23:39:52,935 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.986
+2021-07-28 23:40:03,617 [INFO] Max importance 1.7102253437042236, max mean importance 0.318153977394104.
+2021-07-28 23:40:23,432 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.7072
+2021-07-28 23:40:34,078 [INFO] Max importance 10.160383224487305, max mean importance 1.3167970180511475.
+2021-07-28 23:40:54,250 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.638
+2021-07-28 23:41:04,742 [INFO] Max importance 12.854915618896484, max mean importance 1.5320135354995728.
+2021-07-28 23:41:24,995 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.41507499999999997
+2021-07-28 23:41:25,028 [INFO] 12-th experiment time spent 0:01:51.789076
+2021-07-28 23:41:25,029 [INFO] For now total time spent 0:22:10.526366
+2021-07-28 23:41:25,029 [INFO] 14-th experiment on lambda 100 started at 2021-07-28 23:41:25
+2021-07-28 23:41:25,029 [INFO] Model has been cleaned.
+2021-07-28 23:41:45,399 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9894
+2021-07-28 23:41:55,930 [INFO] Max importance 0.6875782608985901, max mean importance 0.11515212804079056.
+2021-07-28 23:42:16,093 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.62175
+2021-07-28 23:42:28,528 [INFO] Max importance 7.246325492858887, max mean importance 0.9678552150726318.
+2021-07-28 23:42:51,396 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6685666666666666
+2021-07-28 23:43:01,709 [INFO] Max importance 8.190462112426758, max mean importance 1.2543635368347168.
+2021-07-28 23:43:21,608 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.5441
+2021-07-28 23:43:21,641 [INFO] 13-th experiment time spent 0:01:56.611982
+2021-07-28 23:43:21,641 [INFO] For now total time spent 0:24:07.138512
+2021-07-28 23:43:21,641 [INFO] 15-th experiment on lambda 100 started at 2021-07-28 23:43:21
+2021-07-28 23:43:21,641 [INFO] Model has been cleaned.
+2021-07-28 23:43:41,685 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9904
+2021-07-28 23:43:53,024 [INFO] Max importance 1.1065089702606201, max mean importance 0.1773991584777832.
+2021-07-28 23:44:12,864 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.6093
+2021-07-28 23:44:23,404 [INFO] Max importance 13.770350456237793, max mean importance 1.028451681137085.
+2021-07-28 23:44:43,395 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.5729666666666667
+2021-07-28 23:44:54,334 [INFO] Max importance 15.519783020019531, max mean importance 1.3087639808654785.
+2021-07-28 23:45:16,330 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.522275
+2021-07-28 23:45:16,361 [INFO] 14-th experiment time spent 0:01:54.720496
+2021-07-28 23:45:16,361 [INFO] For now total time spent 0:26:01.859162
+2021-07-28 23:45:16,361 [INFO] 16-th experiment on lambda 100 started at 2021-07-28 23:45:16
+2021-07-28 23:45:16,362 [INFO] Model has been cleaned.
+2021-07-28 23:45:43,889 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9905
+2021-07-28 23:45:58,313 [INFO] Max importance 0.43624192476272583, max mean importance 0.10004879534244537.
+2021-07-28 23:46:26,176 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.61205
+2021-07-28 23:46:40,653 [INFO] Max importance 3.0618371963500977, max mean importance 0.7331562042236328.
+2021-07-28 23:47:08,404 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.5966666666666667
+2021-07-28 23:47:21,998 [INFO] Max importance 4.4979352951049805, max mean importance 1.000303864479065.
+2021-07-28 23:47:50,416 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.443625
+2021-07-28 23:47:50,458 [INFO] 15-th experiment time spent 0:02:34.096748
+2021-07-28 23:47:50,458 [INFO] For now total time spent 0:28:35.956089
+2021-07-28 23:47:50,458 [INFO] 17-th experiment on lambda 100 started at 2021-07-28 23:47:50
+2021-07-28 23:47:50,459 [INFO] Model has been cleaned.
+2021-07-28 23:48:18,622 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9886
+2021-07-28 23:48:33,001 [INFO] Max importance 1.009425401687622, max mean importance 0.17470118403434753.
+2021-07-28 23:49:01,164 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.73465
+2021-07-28 23:49:15,390 [INFO] Max importance 2.7218892574310303, max mean importance 0.6420308351516724.
+2021-07-28 23:49:43,542 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.6517
+2021-07-28 23:49:58,018 [INFO] Max importance 5.832067489624023, max mean importance 0.9062477946281433.
+2021-07-28 23:50:26,029 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.5162
+2021-07-28 23:50:26,082 [INFO] 16-th experiment time spent 0:02:35.623835
+2021-07-28 23:50:26,082 [INFO] For now total time spent 0:31:11.580128
+2021-07-28 23:50:26,082 [INFO] 18-th experiment on lambda 100 started at 2021-07-28 23:50:26
+2021-07-28 23:50:26,083 [INFO] Model has been cleaned.
+2021-07-28 23:50:54,068 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9885
+2021-07-28 23:51:08,945 [INFO] Max importance 0.7100532054901123, max mean importance 0.11780543625354767.
+2021-07-28 23:51:36,690 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.73285
+2021-07-28 23:51:51,682 [INFO] Max importance 33.204193115234375, max mean importance 1.5930876731872559.
+2021-07-28 23:52:12,062 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.7194666666666668
+2021-07-28 23:52:23,589 [INFO] Max importance 34.14927673339844, max mean importance 1.8157808780670166.
+2021-07-28 23:52:44,257 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.5276
+2021-07-28 23:52:44,302 [INFO] 17-th experiment time spent 0:02:18.219605
+2021-07-28 23:52:44,302 [INFO] For now total time spent 0:33:29.799933
+2021-07-28 23:52:44,302 [INFO] 19-th experiment on lambda 100 started at 2021-07-28 23:52:44
+2021-07-28 23:52:44,303 [INFO] Model has been cleaned.
+2021-07-28 23:53:03,922 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9871
+2021-07-28 23:53:14,482 [INFO] Max importance 1.1388053894042969, max mean importance 0.16997866332530975.
+2021-07-28 23:53:34,425 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.6604
+2021-07-28 23:53:44,734 [INFO] Max importance 5.984232425689697, max mean importance 0.9171451926231384.
+2021-07-28 23:54:04,853 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.661
+2021-07-28 23:54:15,404 [INFO] Max importance 11.245719909667969, max mean importance 1.1829897165298462.
+2021-07-28 23:54:35,740 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.50405
+2021-07-28 23:54:35,772 [INFO] 18-th experiment time spent 0:01:51.470099
+2021-07-28 23:54:35,772 [INFO] For now total time spent 0:35:21.270216
+2021-07-28 23:54:35,772 [INFO] 20-th experiment on lambda 100 started at 2021-07-28 23:54:35
+2021-07-28 23:54:35,773 [INFO] Model has been cleaned.
+2021-07-28 23:54:56,310 [INFO] Training 3600/3600 iterations done. Mean accuracy on 1 test sets is 0.9913
+2021-07-28 23:55:06,750 [INFO] Max importance 3.0308055877685547, max mean importance 0.32264214754104614.
+2021-07-28 23:55:26,620 [INFO] Training 3600/3600 iterations done. Mean accuracy on 2 test sets is 0.5869
+2021-07-28 23:55:37,223 [INFO] Max importance 17.63888931274414, max mean importance 1.5200207233428955.
+2021-07-28 23:55:57,255 [INFO] Training 3600/3600 iterations done. Mean accuracy on 3 test sets is 0.7235999999999999
+2021-07-28 23:56:07,981 [INFO] Max importance 18.603269577026367, max mean importance 1.8264533281326294.
+2021-07-28 23:56:28,567 [INFO] Training 3600/3600 iterations done. Mean accuracy on 4 test sets is 0.553725
+2021-07-28 23:56:28,609 [INFO] 19-th experiment time spent 0:01:52.836660
+2021-07-28 23:56:28,609 [INFO] For now total time spent 0:37:14.107024
+2021-07-28 23:56:28,609 [INFO] Start calc on lambda 200. 0 experiments are queued.
+2021-07-28 23:56:28,609 [INFO] Start calc on lambda 400. 0 experiments are queued.
+2021-07-28 23:56:28,609 [INFO] Start calc on lambda 500. 0 experiments are queued.
+2021-07-28 23:56:28,609 [INFO] Start calc on lambda 550. 0 experiments are queued.
+2021-07-28 23:56:28,609 [INFO] Start calc on lambda 600. 0 experiments are queued.
+2021-07-28 23:56:28,609 [INFO] Start calc on lambda 650. 0 experiments are queued.
+2021-07-28 23:56:28,609 [INFO] Start calc on lambda 675. 0 experiments are queued.
+2021-07-28 23:56:28,609 [INFO] Start calc on lambda 700. 0 experiments are queued.
+2021-07-28 23:56:28,609 [INFO] Start calc on lambda 725. 0 experiments are queued.
+2021-07-28 23:56:28,609 [INFO] Start calc on lambda 750. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 800. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 900. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 1000. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 1100. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 1200. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 1400. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 1600. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 1900. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 2100. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 2400. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 2700. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 2850. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 3000. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 3250. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 3500. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Start calc on lambda 4000. 0 experiments are queued.
+2021-07-28 23:56:28,610 [INFO] Done for lambdas [0, 100, 200, 400, 500, 550, 600, 650, 675, 700, 725, 750, 800, 900, 1000, 1100, 1200, 1400, 1600, 1900, 2100, 2400, 2700, 2850, 3000, 3250, 3500, 4000]

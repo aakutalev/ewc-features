@@ -305,8 +305,8 @@ def experiments_run():
     time_format = "%Y-%m-%d %H:%M:%S"
     logger.info(f'Continual learning start at {start_time:{time_format}}')
 
-    lmbdas = [0, 200, 400, 500, 550, 600, 650, 675, 700, 725, 750, 800, 900, 1000, 1100, 1200, 1400, 1600, 1900,
-              2100, 2400, 2700, 3000]
+    lmbdas = [0, 100, 200, 400, 500, 550, 600, 650, 675, 700, 725, 750, 800, 900, 1000, 1100, 1200, 1400, 1600, 1900,
+              2100, 2400, 2700, 2850, 3000, 3250, 3500, 4000]
 
     for lmbda in lmbdas:
         exps = experiments[lmbda]

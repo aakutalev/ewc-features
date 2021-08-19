@@ -264,7 +264,7 @@ def experiments_run():
     logger.info(f'Continual learning start at {start_time:{time_format}}')
 
     lmbdas = [0.5, 1, 1.5, 2, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4, 4.25, 4.5, 4.75, 5, 5.25, 5.5, 5.75, 6, 6.25,
-              6.5, 6.75, 7, 7.5, 8, 9, 10, 12, 14, 16, 19, 22, 25]
+              6.5, 6.75, 7, 7.5, 8, 9, 10, 12, 14, 16, 19, 22]
 
     for lmbda in lmbdas:
         exps = experiments[lmbda]
