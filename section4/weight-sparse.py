@@ -21,6 +21,9 @@ from model_ewc_sig import Model as Model_EWC_SIG
 SCRIPT_NAME = "weight-sparse"
 logger = logging.getLogger(SCRIPT_NAME)
 
+ENTIRE = "entire"
+BY_LAYER = "by_layer"
+
 
 class MyMNIST(Dataset):
     def __init__(self, inputs, targets):
@@ -100,7 +103,55 @@ def train_model(model, train_set, test_sets, batch_size=100, epochs=1):
     return accuracy
 
 
-def calc_mean_sparse_degradation(model_class, lr, lmbda, epochs, tries, backup_file=None, sparse_by_weights=False):
+def calc_mean_sparse_degradation_by_layer(model_class, lr, lmbda, epochs, tries, backup_file=None, sparse_by_weights=False):
+    accuracies = []
+    proportion = []
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    for i in range(tries):
+        print(datetime.datetime.now(), f"iter {i} started.")
+        model = model_class(net_struct, lr, device)
+        model.open_lesson(lmbda)
+        train_model(model, mnist, [mnist], epochs=epochs)
+        if not sparse_by_weights:
+            model.close_lesson(mnist[1].data, mnist[1].targets)
+
+        # подготавливаем веса и их порядок
+        views, orders = [], []
+        for n, v in enumerate(model.network):
+            v1 = v.weight.data.reshape(-1)
+            views.append(v1)
+            v3 = v1.data.cpu().numpy() if sparse_by_weights else model.wb_importance[n].view(-1).data.cpu().numpy()
+            orders.append(np.argsort(np.abs(v3)))
+        # циклически обнуляем некоторое количество весов и измеряем точность
+        pwtc = 0.0  # proportion of weights to clear
+        inputs, labels = torch.tensor(mnist[1].data, device=model.device), mnist[1].targets
+        accuracy, proportion = [], []
+        prev_max_idxs = np.zeros(len(views), dtype=int)
+        while pwtc <= 1.0:
+            for n in range(len(views)):
+                v = views[n]
+                o = orders[n]
+                max_idx = int(np.round(o.shape[0] * pwtc))
+                #for idx in range(prev_max_idxs[n], max_idx):
+                #    v1[o1[idx]] = 0.0
+                v[o[prev_max_idxs[n]:max_idx]] = 0.0
+                prev_max_idxs[n] = max_idx
+
+            logits = model.forward(inputs)
+            results = logits.max(-1).indices
+            accuracy.append(np.mean(results.cpu().numpy() == mnist[1].targets))
+            proportion.append(pwtc)
+            pwtc += step
+        print(f'degradation calc complete.')
+        accuracies.append(accuracy)
+    accuracies = np.asarray(accuracies)
+    proportion = np.asarray(proportion)
+    if backup_file:
+        joblib.dump((accuracies, proportion), backup_file, compress=1)
+    return accuracies, proportion
+
+
+def calc_mean_sparse_degradation_entire(model_class, lr, lmbda, epochs, tries, backup_file=None, sparse_by_weights=False):
     accuracies = []
     proportion = []
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -135,7 +186,6 @@ def calc_mean_sparse_degradation(model_class, lr, lmbda, epochs, tries, backup_f
             results = logits.max(-1).indices
             accuracy.append(np.mean(results.cpu().numpy() == mnist[1].targets))
             proportion.append(pwtc)
-            #print(f"\r{proportion[-1]:.3f} - {accuracy[-1]:.4f}", end='')
             pwtc += step
         print(f'degradation calc complete.')
         accuracies.append(accuracy)
@@ -145,21 +195,33 @@ def calc_mean_sparse_degradation(model_class, lr, lmbda, epochs, tries, backup_f
         joblib.dump((accuracies, proportion), backup_file, compress=1)
     return accuracies, proportion
 
-
+sparse_type = ENTIRE
 recalc = True
 
-if recalc:
-    y1, x1 = calc_mean_sparse_degradation(Model_EWC_FIS, lr, 15., epoch_num, tries=10, backup_file='entire_by_w.dmp', sparse_by_weights=True)
-    y2, x2 = calc_mean_sparse_degradation(Model_EWC_FIS, lr, 41., epoch_num, tries=10, backup_file='entire_by_fis.dmp')
-    y3, x3 = calc_mean_sparse_degradation(Model_EWC_MAS, lr, 4.5, epoch_num, tries=10, backup_file='entire_by_mas.dmp')
-    y4, x4 = calc_mean_sparse_degradation(Model_EWC_SI, lr, 0.25, epoch_num, tries=10, backup_file='entire_by_si.dmp')
-    y5, x5 = calc_mean_sparse_degradation(Model_EWC_SIG, lr, 0.75, epoch_num, tries=10, backup_file='entire_by_sig.dmp')
+file_by_w = sparse_type + 'by_w.dmp'
+file_by_fis = sparse_type + 'by_fis.dmp'
+file_by_mas = sparse_type + 'by_mas.dmp'
+file_by_si = sparse_type + 'by_si.dmp'
+file_by_sig = sparse_type + 'by_sig.dmp'
+
+if sparse_type == ENTIRE:
+    calc_mean_sparse_degradation = calc_mean_sparse_degradation_entire
 else:
-    y1, x1 = joblib.load('entire_by_w.dmp')
-    y2, x2 = joblib.load('entire_by_fis.dmp')
-    y3, x3 = joblib.load('entire_by_mas.dmp')
-    y4, x4 = joblib.load('entire_by_si.dmp')
-    y5, x5 = joblib.load('entire_by_sig.dmp')
+    calc_mean_sparse_degradation = calc_mean_sparse_degradation_by_layer
+
+
+if recalc:
+    y1, x1 = calc_mean_sparse_degradation(Model_EWC_FIS, lr, 0.,   epoch_num, tries=10, backup_file=file_by_w, sparse_by_weights=True)
+    y2, x2 = calc_mean_sparse_degradation(Model_EWC_FIS, lr, 41.,  epoch_num, tries=10, backup_file=file_by_fis)
+    y3, x3 = calc_mean_sparse_degradation(Model_EWC_MAS, lr, 4.5,  epoch_num, tries=10, backup_file=file_by_mas)
+    y4, x4 = calc_mean_sparse_degradation(Model_EWC_SI,  lr, 0.25, epoch_num, tries=10, backup_file=file_by_si)
+    y5, x5 = calc_mean_sparse_degradation(Model_EWC_SIG, lr, 0.75, epoch_num, tries=10, backup_file=file_by_sig)
+else:
+    y1, x1 = joblib.load(file_by_w)
+    y2, x2 = joblib.load(file_by_fis)
+    y3, x3 = joblib.load(file_by_mas)
+    y4, x4 = joblib.load(file_by_si)
+    y5, x5 = joblib.load(file_by_sig)
 
 
 y1s = y1.mean(axis=0)

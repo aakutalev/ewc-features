@@ -273,8 +273,12 @@ def experiments_run():
     time_format = "%Y-%m-%d %H:%M:%S"
     logger.info(f'Continual learning start at {start_time:{time_format}}')
 
-    lmbdas = [0., 0.01, 0.03, 0.05, 0.07, 0.75, 0.08, 0.85, 0.09, 0.0925, 0.095, 0.975, 0.1, 0.105, 0.110, 0.115,
-              0.12, 0.125, 0.135, 0.15, 0.165, 0.175, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7]
+    lmbdas = [0., 0.01, 0.03, 0.05, 0.07, 0.75, 0.08, 0.85, 0.09, 0.0925, 0.09375, 0.095, 0.975, 0.1, 0.105, 0.110,
+              0.115, 0.12, 0.125, 0.135, 0.15, 0.165, 0.175, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7]
+    for l in experiments.keys():
+        if l not in lmbdas:
+            del experiments[l]
+            print(f'deleted experiments for lambda {l}')
 
     for lmbda in lmbdas:
         exps = experiments[lmbda]
