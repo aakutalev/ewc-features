@@ -211,11 +211,11 @@ else:
 
 
 if recalc:
-    y1, x1 = calc_mean_sparse_degradation(Model_EWC_FIS, lr, 0.,   epoch_num, tries=10, backup_file=file_by_w, sparse_by_weights=True)
-    y2, x2 = calc_mean_sparse_degradation(Model_EWC_FIS, lr, 41.,  epoch_num, tries=10, backup_file=file_by_fis)
-    y3, x3 = calc_mean_sparse_degradation(Model_EWC_MAS, lr, 4.5,  epoch_num, tries=10, backup_file=file_by_mas)
-    y4, x4 = calc_mean_sparse_degradation(Model_EWC_SI,  lr, 0.25, epoch_num, tries=10, backup_file=file_by_si)
-    y5, x5 = calc_mean_sparse_degradation(Model_EWC_SIG, lr, 0.75, epoch_num, tries=10, backup_file=file_by_sig)
+    y1, x1 = calc_mean_sparse_degradation(Model_EWC_FIS, lr, 0.,    epoch_num, tries=10, backup_file=file_by_w, sparse_by_weights=True)
+    y2, x2 = calc_mean_sparse_degradation(Model_EWC_FIS, lr, 41.,   epoch_num, tries=10, backup_file=file_by_fis)
+    y3, x3 = calc_mean_sparse_degradation(Model_EWC_MAS, lr, 4.5,   epoch_num, tries=10, backup_file=file_by_mas)
+    y4, x4 = calc_mean_sparse_degradation(Model_EWC_SI,  lr, 0.25,  epoch_num, tries=10, backup_file=file_by_si)
+    y5, x5 = calc_mean_sparse_degradation(Model_EWC_SIG, lr, 0.115, epoch_num, tries=10, backup_file=file_by_sig)
 else:
     y1, x1 = joblib.load(file_by_w)
     y2, x2 = joblib.load(file_by_fis)
