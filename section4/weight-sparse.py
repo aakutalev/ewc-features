@@ -39,7 +39,7 @@ class MyMNIST(Dataset):
 
 # setup logger to output to console and file
 logFormat = "%(asctime)s [%(levelname)s] %(message)s"
-logFile = "./fully-connected-ewc-mas.log"
+logFile = "./" + SCRIPT_NAME + ".log"
 logging.basicConfig(filename=logFile, level=logging.INFO, format=logFormat)
 
 logFormatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
@@ -117,10 +117,12 @@ def calc_mean_sparse_degradation_by_layer(model_class, lr, lmbda, epochs, tries,
 
         # подготавливаем веса и их порядок
         views, orders = [], []
-        for n, v in enumerate(model.network):
-            v1 = v.weight.data.reshape(-1)
+        for n, v in enumerate(model.network.parameters()):
+            if len(v.shape) < 2:
+                continue
+            v1 = v.data.reshape(-1)
             views.append(v1)
-            v3 = v1.data.cpu().numpy() if sparse_by_weights else model.wb_importance[n].view(-1).data.cpu().numpy()
+            v3 = v1.data.cpu().numpy() if sparse_by_weights else model.importances[n].view(-1).data.cpu().numpy()
             orders.append(np.argsort(np.abs(v3)))
         # циклически обнуляем некоторое количество весов и измеряем точность
         pwtc = 0.0  # proportion of weights to clear
@@ -156,7 +158,7 @@ def calc_mean_sparse_degradation_entire(model_class, lr, lmbda, epochs, tries, b
     proportion = []
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     for i in range(tries):
-        print(datetime.datetime.now(), f"iter {i} started.")
+        print(datetime.datetime.now(), f"Iteration {i+1} started.")
         model = model_class(net_struct, lr, device)
         model.open_lesson(lmbda)
         train_model(model, mnist, [mnist], epochs=epochs)
@@ -165,10 +167,10 @@ def calc_mean_sparse_degradation_entire(model_class, lr, lmbda, epochs, tries, b
 
         # подготавливаем веса и их порядок
         views, imps = [], []
-        for n, v in enumerate(model.network):
-            v1 = v.weight.data.reshape(-1)
+        for n, v in enumerate(model.network.parameters()):
+            v1 = v.data.reshape(-1)
             views.append(v1)
-            v3 = v1.data.cpu().numpy() if sparse_by_weights else model.wb_importance[n].view(-1).data.cpu().numpy()
+            v3 = v1.data.cpu().numpy() if sparse_by_weights else model.importances[n].view(-1).data.cpu().numpy()
             imps.append(v3)
         params = torch.cat(views)
         order = np.argsort(np.abs(np.concatenate(imps)))
@@ -177,9 +179,29 @@ def calc_mean_sparse_degradation_entire(model_class, lr, lmbda, epochs, tries, b
         inputs, labels = torch.tensor(mnist[1].data, device=model.device), mnist[1].targets
         accuracy, proportion = [], []
         prev_max_idxs = 0
+        b1 = len(views[0])
+        b2 = b1 + len(views[1])
+        b3 = b2 + len(views[2])
+        b4 = b3 + len(views[3])
+        b5 = b4 + len(views[4])
+        b6 = b5 + len(views[5])
         while pwtc <= 1.0:
             max_idx = int(np.round(params.shape[0] * pwtc))
-            params[order[prev_max_idxs:max_idx]] = 0.0
+            for idx in order[prev_max_idxs:max_idx]:
+                if idx < b1:
+                    views[0][idx] = 0.
+                elif idx < b2:
+                    views[1][idx-b1] = 0.
+                elif idx < b3:
+                    views[2][idx-b2] = 0.
+                elif idx < b4:
+                    views[3][idx-b3] = 0.
+                elif idx < b5:
+                    views[4][idx-b4] = 0.
+                elif idx < b6:
+                    views[5][idx-b5] = 0.
+                else:
+                    raise ValueError(f"ERROR! Index {idx} out of range!")
             prev_max_idxs = max_idx
 
             logits = model.forward(inputs)
@@ -195,14 +217,15 @@ def calc_mean_sparse_degradation_entire(model_class, lr, lmbda, epochs, tries, b
         joblib.dump((accuracies, proportion), backup_file, compress=1)
     return accuracies, proportion
 
-sparse_type = ENTIRE
-recalc = True
 
-file_by_w = sparse_type + 'by_w.dmp'
-file_by_fis = sparse_type + 'by_fis.dmp'
-file_by_mas = sparse_type + 'by_mas.dmp'
-file_by_si = sparse_type + 'by_si.dmp'
-file_by_sig = sparse_type + 'by_sig.dmp'
+sparse_type = ENTIRE  # BY_LAYER
+recalc = False  # True  #
+
+file_by_w = sparse_type + '_by_w.dmp'
+file_by_fis = sparse_type + '_by_fis.dmp'
+file_by_mas = sparse_type + '_by_mas.dmp'
+file_by_si = sparse_type + '_by_si.dmp'
+file_by_sig = sparse_type + '_by_sig.dmp'
 
 if sparse_type == ENTIRE:
     calc_mean_sparse_degradation = calc_mean_sparse_degradation_entire
@@ -246,15 +269,18 @@ y5max = y5.max(axis=0)
 
 plt.figure(figsize=(15, 6))
 plt.title(f'Accuracy degradation on sparse with weights')
+plt.xlabel('Sparsed weights percentage')
 plt.ylabel('Accuracy')
 plt.ylim(0.0, 1.0)
 plt.plot(x1, y1s, label='by weights')
 plt.fill_between(x1, y1min, y1max, alpha=0.2)
-plt.plot(x2, y2s, label='by ewc-f')
+plt.plot(x2, y2s, label='by ewc-fis')
 plt.fill_between(x2, y2min, y2max, alpha=0.2)
-plt.plot(x3, y3s, label='by ewc-s')
+plt.plot(x3, y3s, label='by ewc-mas')
 plt.fill_between(x3, y3min, y3max, alpha=0.2)
-plt.plot(x4, y4s, label='by mas')
+plt.plot(x4, y4s, label='by ewc-si')
 plt.fill_between(x4, y4min, y4max, alpha=0.2)
+plt.plot(x5, y5s, label='by ewc-sig')
+plt.fill_between(x5, y5min, y5max, alpha=0.2)
 plt.legend()
 plt.show()
