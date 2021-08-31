@@ -11,12 +11,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import datasets
 from torch.utils.data import Dataset, DataLoader
-from scipy import ndimage
 
-SCRIPT_NAME = "convolutional-ewc-si-stabilized"
+SCRIPT_NAME = "fully-connected-ewc-signal"
 logger = logging.getLogger(SCRIPT_NAME)
-
-_epsilon = 0.1
 
 
 class MyMNIST(Dataset):
@@ -42,13 +39,10 @@ class Model(nn.Module):
 
         # create network layers
         self.network = nn.ModuleList()
-        self.network.append(nn.Conv2d(1, 64, 5).to(device))
-        self.network.append(nn.BatchNorm2d(64).to(device))
-        self.network.append(nn.Conv2d(64, 128, 3).to(device))
-        self.network.append(nn.BatchNorm2d(128).to(device))
-        self.network.append(nn.Conv2d(128, 256, 3).to(device))
-        self.network.append(nn.BatchNorm2d(256).to(device))
-        self.network.append(nn.Linear(8*8*256, 10).to(device))
+        for ins, outs in zip(self.shape[:-1], self.shape[1:]):
+            ins_ = np.abs(ins)
+            outs_ = np.abs(outs)
+            self.network.append(nn.Linear(ins_, outs_).to(self.device))
 
         # initialize optimizer
         self.optimizer = torch.optim.Adam(self.network.parameters(), self.lr)
@@ -65,21 +59,28 @@ class Model(nn.Module):
                              for p in self.network.parameters()]
 
     def forward(self, inputs):
-        h = self.network[0](inputs)
-        h = self.network[1](h)
-        h = F.leaky_relu(h)
-        h = F.max_pool2d(h, kernel_size=(2,2))
-        h = self.network[2](h)
-        h = self.network[3](h)
-        h = F.leaky_relu(h)
-        #h = F.max_pool2d(h, kernel_size=(2,2))
-        h = self.network[4](h)
-        h = self.network[5](h)
-        h = F.leaky_relu(h)
-        #h = F.max_pool2d(h, kernel_size=(2,2))
-        h = h.view(h.shape[0], -1)
-        h = self.network[6](h)
-        return h
+        last_layer_idx = len(self.network) - 1
+        for i, layer in enumerate(self.network):
+            z = layer(inputs)
+            if i < last_layer_idx:
+                inputs = F.leaky_relu(z)
+        return z
+
+    def _calc_signal(self, inputs):
+        action_potentials = []
+        last_layer_idx = len(self.network) - 1
+        bi = inputs.abs().sum(dim=0)
+        for i, layer in enumerate(self.network):
+            wi = (layer.weight.data * bi).abs()
+            action_potentials.append(wi)
+            z = layer(inputs)
+            if i < last_layer_idx:
+                inputs = F.leaky_relu(z)
+            else:
+                inputs = F.softmax(z, dim=-1)
+            bi = inputs.data.abs().sum(dim=0)
+            action_potentials.append(bi)
+        return action_potentials
 
     def step(self, inputs, labels):
         z = self.forward(inputs)
@@ -89,16 +90,9 @@ class Model(nn.Module):
             for p, reg, p_star in zip(list(self.network.parameters()), self.regularizers, self.star_params):
                 loss += torch.sum(reg * torch.square(p - p_star))
 
-        # store params before step for importance calculation
-        params = [p for p in self.network.parameters()]
-        prev_params = [p.clone().detach() for p in params]
-
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
-
-        for accum, p, prev_p in zip(self.accumulators, params, prev_params):
-            accum -= p.grad * (p.data - prev_p.data)  # ToDo: check this in debug
 
     def reset(self):
         # reinitialize network
@@ -114,10 +108,7 @@ class Model(nn.Module):
         :param lmbda:         ewc regularization power
         """
         self.lmbda = lmbda
-        self.regularizers = [imp * lmbda * 0.5 / (imp * lmbda * self.lr + 1.) for imp in self.importances]
-        for accum in self.accumulators:
-            accum.fill_(0.)
-        self.star_params = [v.clone().detach() for v in self.network.parameters()]
+        self.regularizers = [imp * lmbda for imp in self.importances]
 
     def close_lesson(self, inputs=None, labels=None):
         """
@@ -125,8 +116,19 @@ class Model(nn.Module):
         :param closing_set: датасет, на котором будут рассчитаны важности весов после обучения
         :return:
         """
-        for imp, accum, p, prev_p in zip(self.importances, self.accumulators, self.network.parameters(), self.star_params):
-            imp += accum / (torch.square(p.data - prev_p) + _epsilon)
+        if inputs is None:
+            return
+
+        self.eval()
+
+        s_num = len(inputs)
+
+        self.accumulators = self._calc_signal(torch.tensor(inputs, device=self.device))
+
+        for accum, imp in zip(self.accumulators, self.importances):
+            imp.add_(accum / s_num)
+
+        self.star_params = [v.clone().detach() for v in self.network.parameters()]
 
 
 def train_model(model, train_set, test_sets, batch_size=100, epochs=1):
@@ -199,29 +201,10 @@ def permute_mnist(mnist):
     return tuple(mnist2)
 
 
-def negative_mnist(mnist):
-    mnist2 = []
-    for dataset in mnist:
-        new_dataset = deepcopy(dataset)
-        new_dataset.data = 1. - new_dataset.data
-        mnist2.append(new_dataset)
-    return tuple(mnist2)
-
-
-def rotate_mnist(mnist, degrees=0):
-    mnist2 = []
-    for dataset in mnist:
-        new_dataset = deepcopy(dataset)
-        for i in range(len(new_dataset)):
-            new_dataset.data[i, 0] = ndimage.rotate(new_dataset.data[i, 0], degrees, reshape=False)
-        mnist2.append(new_dataset)
-    return tuple(mnist2)
-
-
 def experiments_run():
     # setup logger to output to console and file
     logFormat = "%(asctime)s [%(levelname)s] %(message)s"
-    logFile = "./convolutional-ewc-si-stabilized.log"
+    logFile = "./fully-connected-ewc-signal.log"
     logging.basicConfig(filename=logFile, level=logging.INFO, format=logFormat)
 
     logFormatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
@@ -233,7 +216,7 @@ def experiments_run():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"Operating device is {device}")
 
-    dataset_file = 'datasets-conv.dmp'
+    dataset_file = 'datasets.dmp'
     try:
         mnist_datasets = joblib.load(dataset_file)
         logger.info('Dataset has been loaded from cache.')
@@ -241,59 +224,57 @@ def experiments_run():
         logger.info('Dataset cache not found. Creating new one.')
         # download and transform mnist dataset
         train_data = datasets.MNIST('../mnist_data', download=True, train=True)
-        train_inputs = train_data.data.unsqueeze(1).numpy()
-        train_inputs = (train_inputs / 255).astype(np.float32)
+        train_inputs = train_data.data.numpy()
+        train_inputs = (train_inputs.reshape(train_inputs.shape[0], -1) / 255).astype(np.float32)
         train_labels = train_data.targets.numpy()
         train_dataset = MyMNIST(train_inputs, train_labels)
+
         test_data = datasets.MNIST('../mnist_data', download=True, train=False)
-        test_inputs = test_data.data.unsqueeze(1).numpy()
-        test_inputs = (test_inputs / 255).astype(np.float32)
+        test_inputs = test_data.data.numpy()
+        test_inputs = (test_inputs.reshape(test_inputs.shape[0], -1) / 255).astype(np.float32)
         test_labels = test_data.targets.numpy()
         test_dataset = MyMNIST(test_inputs, test_labels)
+
         mnist = (train_dataset, test_dataset)
-
-        train_data = datasets.FashionMNIST('../fmnist_data', download=True, train=True)
-        train_inputs = train_data.data.unsqueeze(1).numpy()
-        train_inputs = (train_inputs / 255).astype(np.float32)
-        train_labels = train_data.targets.numpy()
-        train_dataset = MyMNIST(train_inputs, train_labels)
-        test_data = datasets.FashionMNIST('../fmnist_data', download=True, train=False)
-        test_inputs = test_data.data.unsqueeze(1).numpy()
-        test_inputs = (test_inputs / 255).astype(np.float32)
-        test_labels = test_data.targets.numpy()
-        test_dataset = MyMNIST(test_inputs, test_labels)
-        fmnist = (train_dataset, test_dataset)
-
         mnist0 = mnist
-        mnist1 = fmnist
-        mnist2 = rotate_mnist(mnist, 90)
-        mnist3 = rotate_mnist(fmnist, 90)
+        mnist1 = permute_mnist(mnist)
+        mnist2 = permute_mnist(mnist)
+        mnist3 = permute_mnist(mnist)
+        mnist4 = permute_mnist(mnist)
+        mnist5 = permute_mnist(mnist)
+        mnist6 = permute_mnist(mnist)
+        mnist7 = permute_mnist(mnist)
+        mnist8 = permute_mnist(mnist)
+        mnist9 = permute_mnist(mnist)
 
-        mnist_datasets = [mnist0, mnist1, mnist2, mnist3]
+        mnist_datasets = [mnist0, mnist1, mnist2, mnist3, mnist4, mnist5, mnist6, mnist7, mnist8, mnist9]
         joblib.dump(mnist_datasets, dataset_file, compress=3)
 
-    exp_file = "convolutional-ewc-si-stabilized.dmp"
+    exp_file = "fully-connected-ewc-signal.dmp"
     try:
         experiments = joblib.load(exp_file)
+        #for idx in experiments.keys():
+        #    if idx >0.7:
+        #        del experiments[idx]
     except FileNotFoundError:
         logger.info('Experiment cache not found. Creating new one.')
         experiments = defaultdict(list)
 
     # network structure and training parameters
+    net_struct = [784, 300, 150, 10]
     learning_rate = 0.001
-    N = 20
+    N = 10
     batch_size = 100
     epoch_num = 6
 
-    model = Model(learning_rate=learning_rate, device=device)
+    model = Model(shape=net_struct, learning_rate=learning_rate, device=device)
 
     start_time = datetime.datetime.now()
     time_format = "%Y-%m-%d %H:%M:%S"
     logger.info(f'Continual learning start at {start_time:{time_format}}')
 
-    lmbdas = [0, 2, 4, 5, 5.5, 6, 6.5, 6.75, 7, 7.25, 7.5, 8, 9, 10, 11, 12, 14, 16, 19,
-              21, 24, 27, 30, 35, 40, 50, 70, 90, 110, 140, 170, 200, 230, 260, 290, 320, 350, 400,
-              450,500,550,600,650,700,750,800, 1000, 1200, 1400, 1600, 1800, 2000]
+    lmbdas = [0., 0.01, 0.03, 0.05, 0.07, 0.75, 0.08, 0.85, 0.09, 0.0925, 0.095, 0.975, 0.1, 0.105, 0.110, 0.115,
+              0.12, 0.125, 0.135, 0.15, 0.165, 0.175, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7]
 
     for lmbda in lmbdas:
         exps = experiments[lmbda]

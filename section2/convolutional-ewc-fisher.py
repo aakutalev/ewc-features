@@ -318,7 +318,7 @@ def experiments_run():
             logger.info(f'{i+1+len_exp}-th experiment on lambda {lmbda} started at {iter_start_time:{time_format}}')
             accuracies = continual_learning(model, mnist_datasets, lmbda=lmbda, batch_size=batch_size, epoch_num=epoch_num)
             exps.append(accuracies)
-            joblib.dump(experiments, exp_file)
+            joblib.dump(experiments, exp_file, compress=1)
             logger.info(f'{i+1}-th experiment time spent {datetime.datetime.now() - iter_start_time}')
             logger.info(f'For now total time spent {datetime.datetime.now() - start_time}')
 
