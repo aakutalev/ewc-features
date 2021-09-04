@@ -253,9 +253,6 @@ def experiments_run():
     exp_file = "fully-connected-ewc-signal.dmp"
     try:
         experiments = joblib.load(exp_file)
-        #for idx in experiments.keys():
-        #    if idx >0.7:
-        #        del experiments[idx]
     except FileNotFoundError:
         logger.info('Experiment cache not found. Creating new one.')
         experiments = defaultdict(list)
@@ -263,7 +260,7 @@ def experiments_run():
     # network structure and training parameters
     net_struct = [784, 300, 150, 10]
     learning_rate = 0.001
-    N = 10
+    N = 20
     batch_size = 100
     epoch_num = 6
 
@@ -273,12 +270,8 @@ def experiments_run():
     time_format = "%Y-%m-%d %H:%M:%S"
     logger.info(f'Continual learning start at {start_time:{time_format}}')
 
-    lmbdas = [0., 0.01, 0.03, 0.05, 0.07, 0.75, 0.08, 0.85, 0.09, 0.0925, 0.09375, 0.095, 0.975, 0.1, 0.105, 0.110,
+    lmbdas = [0., 0.01, 0.03, 0.05, 0.07, 0.75, 0.08, 0.085, 0.09, 0.0925, 0.09375, 0.095, 0.0975, 0.1, 0.105, 0.110,
               0.115, 0.12, 0.125, 0.135, 0.15, 0.165, 0.175, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7]
-    for l in list(experiments.keys()):
-        if l not in lmbdas:
-            del experiments[l]
-            print(f'deleted experiments for lambda {l}')
 
     for lmbda in lmbdas:
         exps = experiments[lmbda]
@@ -291,7 +284,7 @@ def experiments_run():
             accuracies = continual_learning(model, mnist_datasets, lmbda=lmbda, batch_size=batch_size, epoch_num=epoch_num)
             exps.append(accuracies)
             joblib.dump(experiments, exp_file, compress=1)
-            logger.info(f'{i+1}-th experiment time spent {datetime.datetime.now() - iter_start_time}')
+            logger.info(f'{i+1+len_exp}-th experiment time spent {datetime.datetime.now() - iter_start_time}')
             logger.info(f'For now total time spent {datetime.datetime.now() - start_time}')
 
     logger.info(f'Done for lambdas {lmbdas}')
