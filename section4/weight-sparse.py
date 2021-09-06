@@ -24,6 +24,11 @@ logger = logging.getLogger(SCRIPT_NAME)
 ENTIRE = "entire"
 BY_LAYER = "by_layer"
 
+student = { 0: 0.,
+            1:  12.7062, 2: 4.3027,  3: 3.1824,  4: 2.7764,  5: 2.5706,  6: 2.4469,  7: 2.3646,  8: 2.3060,
+            9:  2.2622, 10: 2.2281, 11: 2.2010, 12: 2.1788, 13: 2.1604, 14: 2.1448, 15: 2.1314, 16: 2.1199,
+            17: 2.1098, 18: 2.1009, 19: 2.0930, 20: 2.0860 }
+
 
 class MyMNIST(Dataset):
     def __init__(self, inputs, targets):
@@ -248,39 +253,36 @@ else:
 
 
 y1s = y1.mean(axis=0)
-y1min = y1.min(axis=0)
-y1max = y1.max(axis=0)
+y1d = student[len(y1)-1] * y1.std(axis=0) / np.sqrt(len(y1))
 
 y2s = y2.mean(axis=0)
-y2min = y2.min(axis=0)
-y2max = y2.max(axis=0)
+y2d = student[len(y2)-1] * y2.std(axis=0) / np.sqrt(len(y2))
 
 y3s = y3.mean(axis=0)
-y3min = y3.min(axis=0)
-y3max = y3.max(axis=0)
+y3d = student[len(y3)-1] * y3.std(axis=0) / np.sqrt(len(y3))
 
 y4s = y4.mean(axis=0)
-y4min = y4.min(axis=0)
-y4max = y4.max(axis=0)
+y4d = student[len(y4)-1] * y4.std(axis=0) / np.sqrt(len(y4))
 
 y5s = y5.mean(axis=0)
-y5min = y5.min(axis=0)
-y5max = y5.max(axis=0)
+y5d = student[len(y5)-1] * y5.std(axis=0) / np.sqrt(len(y5))
 
-plt.figure(figsize=(15, 6))
-plt.title(f'Accuracy degradation on sparse with weights')
-plt.xlabel('Sparsed weights percentage')
+plt.figure(figsize=(18, 6))
+plt.title(f'Accuracy degradation on weight pruning')
+plt.xlabel('Pruned weights percentage')
 plt.ylabel('Accuracy')
 plt.ylim(0.0, 1.0)
-plt.plot(x1, y1s, label='by weights')
-plt.fill_between(x1, y1min, y1max, alpha=0.2)
-plt.plot(x2, y2s, label='by ewc-fis')
-plt.fill_between(x2, y2min, y2max, alpha=0.2)
-plt.plot(x3, y3s, label='by ewc-mas')
-plt.fill_between(x3, y3min, y3max, alpha=0.2)
-plt.plot(x4, y4s, label='by ewc-si')
-plt.fill_between(x4, y4min, y4max, alpha=0.2)
-plt.plot(x5, y5s, label='by ewc-sig')
-plt.fill_between(x5, y5min, y5max, alpha=0.2)
+plt.plot(x1 * 100, y1s, label='Pruning by abs of weights')
+plt.fill_between(x1 * 100, y1s - y1d, y1s + y1d, alpha=0.2)
+plt.plot(x2 * 100, y2s, label='Pruning by Fisher importance')
+plt.fill_between(x2 * 100, y2s - y2d, y2s + y2d, alpha=0.2)
+plt.plot(x3 * 100, y3s, label='Pruning by MAS importance')
+plt.fill_between(x3 * 100, y3s - y3d, y3s + y3d, alpha=0.2)
+plt.plot(x4 * 100, y4s, label='Pruning by SI importance')
+plt.fill_between(x4 * 100, y4s - y4d, y4s + y4d, alpha=0.2)
+plt.plot(x5 * 100, y5s, label='Pruning by total abs signal')
+plt.fill_between(x5 * 100, y5s - y5d, y5s + y5d, alpha=0.2)
 plt.legend()
 plt.show()
+
+print("Done!")
